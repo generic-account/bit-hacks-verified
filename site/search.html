@@ -1,0 +1,50 @@
+---
+layout: default
+title: Search
+---
+
+<main class="max-w-3xl mx-auto">
+  <h1>Search</h1>
+  <input id="q" placeholder="Search tags, title, summary…" aria-label="search" style="width:100%;padding:.6rem;font-size:1rem;">
+  <p id="count" style="opacity:.7;margin:.5rem 0;"></p>
+  <ul id="results"></ul>
+</main>
+
+<script>
+(async function(){
+  // Load the generated index
+  const idxUrl = "{{ '/search.json' | relative_url }}";
+  const data = await fetch(idxUrl).then(r => r.json());
+  const q = document.getElementById('q');
+  const out = document.getElementById('results');
+  const count = document.getElementById('count');
+
+  function render(list){
+    count.textContent = (list.length === data.length)
+      ? `${list.length} items`
+      : `${list.length} results`;
+    out.innerHTML = list.map(it => {
+      const tags = (it.tags||[]).join(', ');
+      const summary = it.summary ? ` — ${it.summary}` : '';
+      return `<li><a href="${it.url}">${it.title}</a>${summary} <small>${tags ? '['+tags+']' : ''}</small></li>`;
+    }).join('');
+  }
+
+  function filter(query) {
+    const s = query.trim().toLowerCase();
+    if (!s) return data;
+    return data.filter(it => {
+      const hay = [
+        it.title || '',
+        it.summary || '',
+        (it.tags||[]).join(' '),
+        it.path || ''
+      ].join(' ').toLowerCase();
+      return hay.includes(s);
+    });
+  }
+
+  render(data);
+  q.addEventListener('input', () => render(filter(q.value)));
+})();
+</script>

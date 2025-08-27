@@ -1,0 +1,11 @@
+title: Verified Bit Hacks
+url: "https://generic-account.github.io"
+baseurl: "/bit-hacks-verified"   # important for project sites
+
+collections:
+  proofs:
+    output: true
+    permalink: /proofs/:name/
+
+markdown: kramdown
+highlighter: rouge

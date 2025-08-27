@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Kernighan\u2019s Bitcount",
+    "summary": "Count set bits by clearing the lowest 1-bit.",
+    "tags": [
+      "bitcount",
+      "popcount",
+      "integer"
+    ],
+    "url": "/proofs/kernighan-bitcount/",
+    "path": "bitcount/Kernighan.v",
+    "categories": [
+      "bitcount"
+    ],
+    "slug": "kernighan-bitcount"
+  },
+  {
+    "title": "Fast Division",
+    "summary": "proof of faster division",
+    "tags": [
+      "float"
+    ],
+    "url": "/proofs/fast-division/",
+    "path": "float/FastDiv.v",
+    "categories": [
+      "float"
+    ],
+    "slug": "fast-division"
+  }
+]

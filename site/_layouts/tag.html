@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<main class="max-w-3xl mx-auto">
+  <h1>Tag: {{ page.tag }}</h1>
+  <p>All proofs tagged <strong>{{ page.tag }}</strong>.</p>
+  <ul>
+    {% assign tag = page.tag %}
+    {% assign items = site.proofs | where_exp: "p", "p.tags contains tag" %}
+    {% for p in items %}
+      <li>
+        <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
+        {% if p.summary %} — {{ p.summary }}{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</main>
