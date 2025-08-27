@@ -1,11 +1,25 @@
 title: Verified Bit Hacks
+description: Formally verified low-level tricks and optimizations
+theme: jekyll-theme-minimal
+
 url: "https://generic-account.github.io"
-baseurl: "/bit-hacks-verified"   # important for project sites
+baseurl: "/bit-hacks-verified"
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: kramdown
+highlighter: rouge
 
 collections:
   proofs:
     output: true
     permalink: /proofs/:name/
 
-markdown: kramdown
-highlighter: rouge
+# Optionalminimal nav links
+# nav:
+#   - name: Home
+#     link: /
+#   - name: Search
+#     link: /search.html

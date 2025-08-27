@@ -3,33 +3,28 @@ layout: default
 title: Search
 ---
 
-<main class="max-w-3xl mx-auto">
-  <h1>Search</h1>
-  <input id="q" placeholder="Search tags, title, summary…" aria-label="search" style="width:100%;padding:.6rem;font-size:1rem;">
-  <p id="count" style="opacity:.7;margin:.5rem 0;"></p>
-  <ul id="results"></ul>
-</main>
+<h1>Search</h1>
+<input id="q" placeholder="Search tags, title, summary…" aria-label="search"
+       style="width:100%;padding:.6rem;font-size:1rem;background:#0f0f0f;color:#f5f5f5;border:1px solid #333;">
+<p id="count" style="opacity:.7;margin:.5rem 0;"></p>
+<ul id="results"></ul>
 
 <script>
 (async function(){
-  // Load the generated index
-  const idxUrl = "{{ '/search.json' | relative_url }}";
-  const data = await fetch(idxUrl).then(r => r.json());
+  const data = await fetch('{{ "/search.json" | relative_url }}').then(r=>r.json());
   const q = document.getElementById('q');
   const out = document.getElementById('results');
   const count = document.getElementById('count');
 
   function render(list){
-    count.textContent = (list.length === data.length)
-      ? `${list.length} items`
-      : `${list.length} results`;
+    count.textContent = (list.length === data.length) ? `${list.length} items`
+                                                     : `${list.length} results`;
     out.innerHTML = list.map(it => {
       const tags = (it.tags||[]).join(', ');
       const summary = it.summary ? ` — ${it.summary}` : '';
       return `<li><a href="${it.url}">${it.title}</a>${summary} <small>${tags ? '['+tags+']' : ''}</small></li>`;
     }).join('');
   }
-
   function filter(query) {
     const s = query.trim().toLowerCase();
     if (!s) return data;
@@ -43,7 +38,6 @@ title: Search
       return hay.includes(s);
     });
   }
-
   render(data);
   q.addEventListener('input', () => render(filter(q.value)));
 })();

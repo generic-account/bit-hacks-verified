@@ -2,37 +2,32 @@
 layout: default
 ---
 
-<article class="proof max-w-3xl mx-auto">
-  <header>
-    <h1>{{ page.title }}</h1>
-    {% if page.summary %}
-      <p class="summary">{{ page.summary }}</p>
-    {% endif %}
-    <p class="meta">
-      <strong>Source:</strong>
-      <code>{{ page.source_path }}</code>
-      {% if page.categories and page.categories.size > 0 %}
-        <br><strong>Categories:</strong>
-        {% for c in page.categories %}
-          <span>{{ c }}</span>{% unless forloop.last %}/{% endunless %}
-        {% endfor %}
-      {% endif %}
-      {% if page.tags and page.tags.size > 0 %}
-        <br><strong>Tags:</strong>
-        {% for t in page.tags %}
-          <a href="{{ '/tags/' | relative_url }}{{ t | slugify }}/">{{ t }}</a>{% if forloop.last == false %}, {% endif %}
-        {% endfor %}
-      {% endif %}
-    </p>
-    <hr/>
-  </header>
+<article class="proof">
+  <h1>{{ page.title }}</h1>
+  {% if page.summary %}
+    <p>{{ page.summary }}</p>
+  {% endif %}
 
-  <div class="content">
-    {{ content }}
-  </div>
+  <p>
+    <strong>Source:</strong> <code>{{ page.source_path }}</code>
+    {% if page.categories and page.categories.size > 0 %}
+      <br><strong>Folders:</strong>
+      {% assign header = page.categories | join: ' / ' %}
+      {{ header }}
+    {% endif %}
+    {% if page.tags and page.tags.size > 0 %}
+      <br><strong>Tags:</strong>
+      {% for t in page.tags %}
+        <a href="{{ '/tags/' | relative_url }}{{ t | slugify }}/">{{ t }}</a>{% if forloop.last == false %}, {% endif %}
+      {% endfor %}
+    {% endif %}
+  </p>
+  <hr/>
+
+  {{ content }}
 
   {% if page.related and page.related.size > 0 %}
-  <footer>
+    <hr/>
     <h3>Related</h3>
     <ul>
       {% for slug in page.related %}
@@ -42,6 +37,5 @@ layout: default
         {% endif %}
       {% endfor %}
     </ul>
-  </footer>
   {% endif %}
 </article>

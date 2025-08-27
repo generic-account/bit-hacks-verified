@@ -9,7 +9,6 @@ A growing reference of low-level tricks and optimizations with machine-checked p
 Use the [search]({{ '/search.html' | relative_url }}) page, browse by tags, or scan the catalog below.
 
 ## Tags
-
 <ul>
 {% assign all = "" | split: "" %}
 {% for p in site.proofs %}
@@ -24,10 +23,13 @@ Use the [search]({{ '/search.html' | relative_url }}) page, browse by tags, or s
 </ul>
 
 ## Catalog
-
 {% assign groups = site.proofs | group_by: "categories" %}
 {% for g in groups %}
-### {{ g.name | join: " / " | default: "root" }}
+  {% assign header = g.name
+    | replace: '["',''
+    | replace: '"]',''
+    | replace: '","',' / ' %}
+### {{ header | default: "root" }}
 <ul>
   {% assign sorted = g.items | sort: "title" %}
   {% for p in sorted %}
