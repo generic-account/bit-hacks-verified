@@ -12,6 +12,7 @@ title: Search
 <script>
 (async function(){
   const data = await fetch('{{ "/search.json" | relative_url }}').then(r=>r.json());
+  const baseUrl = '{{ site.baseurl }}';
   const q = document.getElementById('q');
   const out = document.getElementById('results');
   const count = document.getElementById('count');
@@ -22,7 +23,7 @@ title: Search
     out.innerHTML = list.map(it => {
       const tags = (it.tags||[]).join(', ');
       const summary = it.summary ? ` — ${it.summary}` : '';
-      return `<li><a href="${it.url}">${it.title}</a>${summary} <small>${tags ? '['+tags+']' : ''}</small></li>`;
+      return `<li><a href="${baseUrl}${it.url}">${it.title}</a>${summary} <small>${tags ? '['+tags+']' : ''}</small></li>`;
     }).join('');
   }
   function filter(query) {

@@ -160,8 +160,9 @@ def render_index(records: list[dict]) -> str:
     for record in records:
         summary = record["summary"]
         tags = ", ".join(record["tags"])
+        proof_path = record["url"]
         lines.append(
-            f'- [{record["title"]}]({record["url"]})'
+            f'- [{record["title"]}](' + '{{ "' + proof_path + '" | relative_url }}' + ')'
             f'{" — " + summary if summary else ""}'
             f'{" [" + tags + "]" if tags else ""}'
         )
