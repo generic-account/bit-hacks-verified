@@ -7,6 +7,7 @@ tags: ["bitcount", "integer", "popcount", "swar"]
 search_keywords: ["popcount", "population count", "hamming weight", "swar", "64-bit"]
 source_path: "src/hacks/popcount_swar64.c"
 slug: "popcount_swar64"
+permalink: "/proofs/popcount_swar64/"
 ---
 
 ## Summary

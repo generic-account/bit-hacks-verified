@@ -82,6 +82,7 @@ def slugify(text: str) -> str:
 
 
 def render_markdown(metadata: dict, relpath: str, optimized_src: str, reference_src: str) -> str:
+    proof_url = f"/proofs/{metadata['hack_id']}/"
     front_matter = {
         "layout": "proof",
         "title": metadata["title"],
@@ -91,6 +92,7 @@ def render_markdown(metadata: dict, relpath: str, optimized_src: str, reference_
         "search_keywords": metadata["search_keywords"],
         "source_path": relpath,
         "slug": metadata["hack_id"],
+        "permalink": proof_url,
     }
     lines = ["---"]
     for key, value in front_matter.items():
@@ -198,6 +200,7 @@ def main() -> None:
         optimized_src = extract_function(text, "bh_optimized")
         reference_src = extract_function(text, "bh_reference")
         relpath = str(hack_path.relative_to(ROOT))
+        proof_url = f"/proofs/{metadata['hack_id']}/"
 
         markdown = render_markdown(metadata, relpath, optimized_src, reference_src)
         md_out = PROOFS_DIR / f"{metadata['hack_id']}.md"
@@ -212,7 +215,7 @@ def main() -> None:
                 "summary": metadata["summary"],
                 "contract": metadata["contract"],
                 "path": relpath,
-                "url": f"/proofs/{metadata['hack_id']}/",
+                "url": proof_url,
             }
         )
         for tag in metadata["tags"]:
