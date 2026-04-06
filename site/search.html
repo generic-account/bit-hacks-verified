@@ -4,7 +4,7 @@ title: Search
 ---
 
 <h1>Search</h1>
-<input id="q" placeholder="Search tags, title, summary…" aria-label="search"
+<input id="q" placeholder="Search tags, title, summary, keywords…" aria-label="search"
        style="width:100%;padding:.6rem;font-size:1rem;background:#0f0f0f;color:#f5f5f5;border:1px solid #333;">
 <p id="count" style="opacity:.7;margin:.5rem 0;"></p>
 <ul id="results"></ul>
@@ -33,6 +33,7 @@ title: Search
         it.title || '',
         it.summary || '',
         (it.tags||[]).join(' '),
+        (it.search_keywords||[]).join(' '),
         it.path || ''
       ].join(' ').toLowerCase();
       return hay.includes(s);
