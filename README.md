@@ -48,3 +48,5 @@ https://leveluppp.ghost.io/advanced-bit-hacks
 https://cp-algorithms.com/algebra/bit-manipulation.html
 
 more to come
+
+hi
