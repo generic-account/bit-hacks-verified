@@ -2,19 +2,12 @@
 title = "64-bit SWAR popcount"
 hack_id = "popcount_swar64"
 tags = ["bitcount", "integer", "popcount", "swar"]
-search_keywords = ["popcount", "population count", "hamming weight", "swar", "64-bit"]
 summary = "Counts the set bits in a 64-bit word using a classic SWAR reduction."
 contract = "Returns the number of one bits in the input as an integer in the inclusive range [0, 64]."
 notes = """
 The optimized implementation performs lane-wise partial sums and finishes with a multiply-and-shift reduction.
 The reference implementation is intentionally direct so differential testing has an obvious oracle.
 """
-verification = [
-  "Strict Clang warnings in test and fuzz builds",
-  "Hand-written edge-case assertions in bh_tests",
-  "Deterministic random differential testing in generated test main",
-  "libFuzzer smoke run with address and undefined behavior sanitizers",
-]
 sources = [
   "https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel",
   "https://en.wikipedia.org/wiki/Hamming_weight",

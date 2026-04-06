@@ -23,7 +23,7 @@ TEST_CFLAGS := $(COMMON_CFLAGS) $(WARNING_FLAGS)
 SAN_CFLAGS := -std=c11 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls $(WARNING_FLAGS)
 FUZZ_CFLAGS := -std=c11 -O1 -g -fsanitize=fuzzer,address,undefined $(WARNING_FLAGS)
 
-.PHONY: all warnings test san-test fuzz-smoke site ci clean
+.PHONY: all warnings test san-test fuzz-smoke site site-check ci clean
 
 all: ci
 
@@ -46,7 +46,15 @@ fuzz-smoke: $(FUZZ_BINS)
 site:
 	$(PYTHON) src/scripts/gen_site.py
 
-ci: warnings test san-test fuzz-smoke site
+site-check: site
+	@status="$$(git status --porcelain --untracked-files=all -- site/index.md site/search.json site/_proofs site/tags)"; \
+	if [ -n "$$status" ]; then \
+		printf '%s\n' "$$status"; \
+		echo "Generated site files are out of date; run 'make site' and commit the results."; \
+		exit 1; \
+	fi
+
+ci: warnings test san-test fuzz-smoke site-check
 
 clean:
 	rm -rf $(BUILD_DIR)

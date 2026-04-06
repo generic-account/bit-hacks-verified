@@ -4,7 +4,7 @@ title: Search
 ---
 
 <h1>Search</h1>
-<input id="q" placeholder="Search tags, title, summary, keywords…" aria-label="search"
+<input id="q" placeholder="Search tags and title…" aria-label="search"
        style="width:100%;padding:.6rem;font-size:1rem;background:#0f0f0f;color:#f5f5f5;border:1px solid #333;">
 <p id="count" style="opacity:.7;margin:.5rem 0;"></p>
 <ul id="results"></ul>
@@ -22,8 +22,7 @@ title: Search
                                                      : `${list.length} results`;
     out.innerHTML = list.map(it => {
       const tags = (it.tags||[]).join(', ');
-      const summary = it.summary ? ` — ${it.summary}` : '';
-      return `<li><a href="${baseUrl}${it.url}">${it.title}</a>${summary} <small>${tags ? '['+tags+']' : ''}</small></li>`;
+      return `<li><a href="${baseUrl}${it.url}">${it.title}</a> <small>${tags ? '['+tags+']' : ''}</small></li>`;
     }).join('');
   }
   function filter(query) {
@@ -32,10 +31,7 @@ title: Search
     return data.filter(it => {
       const hay = [
         it.title || '',
-        it.summary || '',
-        (it.tags||[]).join(' '),
-        (it.search_keywords||[]).join(' '),
-        it.path || ''
+        (it.tags||[]).join(' ')
       ].join(' ').toLowerCase();
       return hay.includes(s);
     });
