@@ -83,19 +83,28 @@ code { border-radius: 4px; padding: 0.1em 0.35em; }
 pre code {
   padding: 0;
   border-radius: 0;
+  background: transparent;
 }
 .highlighter-rouge,
 .highlight {
   margin: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 .highlighter-rouge .highlight {
   background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 .highlighter-rouge pre,
 .highlight pre,
 pre.highlight {
   margin: 0;
   padding: 0.9rem;
+  background: #0f0f0f;
+  border: 1px solid #333;
+  box-shadow: none;
 }
 .highlighter-rouge code,
 .highlight code,
@@ -104,6 +113,7 @@ pre code {
   margin: 0;
   padding: 0;
   border: 0;
+  box-shadow: none;
 }
 
 /* Blockquotes & tables */
