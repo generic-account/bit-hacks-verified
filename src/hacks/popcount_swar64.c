@@ -20,6 +20,13 @@ sources = [
 typedef uint64_t bh_input_t;
 typedef uint32_t bh_output_t;
 
+static bh_output_t bh_optimized_swar(bh_input_t input);
+static bh_output_t bh_optimized_kernighan(bh_input_t input);
+
+#define BH_IMPLS(X) \
+    X("swar", bh_optimized_swar) \
+    X("kernighan", bh_optimized_kernighan)
+
 #include "bh/harness.h"
 
 static void bh_contract(bh_input_t input, bh_output_t output)
@@ -40,13 +47,25 @@ static bh_output_t bh_reference(bh_input_t input)
     return count;
 }
 
-static bh_output_t bh_optimized(bh_input_t input)
+static bh_output_t bh_optimized_swar(bh_input_t input)
 {
     input = input - ((input >> 1) & UINT64_C(0x5555555555555555));
     input = (input & UINT64_C(0x3333333333333333)) +
         ((input >> 2) & UINT64_C(0x3333333333333333));
     input = (input + (input >> 4)) & UINT64_C(0x0f0f0f0f0f0f0f0f);
     return (bh_output_t)((input * UINT64_C(0x0101010101010101)) >> 56);
+}
+
+static bh_output_t bh_optimized_kernighan(bh_input_t input)
+{
+    bh_output_t count = 0;
+
+    while (input != 0u) {
+        input &= input - 1u;
+        ++count;
+    }
+
+    return count;
 }
 
 static void bh_tests(void)

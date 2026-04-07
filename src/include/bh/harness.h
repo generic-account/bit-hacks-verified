@@ -15,16 +15,87 @@
 
 static void bh_contract(bh_input_t input, bh_output_t output);
 static bh_output_t bh_reference(bh_input_t input);
-static bh_output_t bh_optimized(bh_input_t input);
 static void bh_tests(void);
 static bool bh_decode_input(const uint8_t *data, size_t size, bh_input_t *out);
 static bool bh_output_eq(bh_output_t lhs, bh_output_t rhs);
+
+#ifndef BH_IMPLS
+static bh_output_t bh_optimized(bh_input_t input);
+#define BH_IMPLS(X) X("optimized", bh_optimized)
+#endif
+
+typedef bh_output_t (*bh_impl_fn_t)(bh_input_t input);
+
+typedef struct bh_impl_desc {
+    const char *name;
+    bh_impl_fn_t fn;
+} bh_impl_desc_t;
+
+#define BH_IMPL_DESC_ENTRY(name, fn) { name, fn },
+
+static const bh_impl_desc_t bh_impls[] = {
+    BH_IMPLS(BH_IMPL_DESC_ENTRY)
+};
+
+enum {
+    bh_impl_count = (int)(sizeof(bh_impls) / sizeof(bh_impls[0]))
+};
 
 #if defined(__clang__) || defined(__GNUC__)
 #define BH_UNUSED __attribute__((unused))
 #else
 #define BH_UNUSED
 #endif
+
+static void bh_fail_mismatch(const char *kind, const char *impl_name,
+    const char *file, int line)
+{
+    fprintf(stderr, "%s mismatch for %s at %s:%d\n", kind, impl_name, file, line);
+    abort();
+}
+
+static void bh_assert_impl_agrees_at(const char *file, int line,
+    const bh_impl_desc_t *impl, bh_input_t input)
+{
+    const bh_output_t ref = bh_reference(input);
+    const bh_output_t actual = impl->fn(input);
+
+    bh_contract(input, ref);
+    bh_contract(input, actual);
+    if (!bh_output_eq(ref, actual)) {
+        bh_fail_mismatch("reference/optimized", impl->name, file, line);
+    }
+}
+
+static void bh_assert_all_agree_at(const char *file, int line, bh_input_t input)
+{
+    int i;
+
+    for (i = 0; i < bh_impl_count; ++i) {
+        bh_assert_impl_agrees_at(file, line, &bh_impls[i], input);
+    }
+}
+
+static void bh_assert_impl_eq_at(const char *file, int line,
+    const bh_impl_desc_t *impl, bh_input_t input, bh_output_t expected)
+{
+    const bh_output_t actual = impl->fn(input);
+
+    bh_contract(input, actual);
+    if (!bh_output_eq(actual, expected)) {
+        bh_fail_mismatch("optimized/expected", impl->name, file, line);
+    }
+}
+
+static void bh_assert_all_eq_at(const char *file, int line,
+    bh_input_t input, bh_output_t expected)
+{
+    int i;
+
+    for (i = 0; i < bh_impl_count; ++i) {
+        bh_assert_impl_eq_at(file, line, &bh_impls[i], input, expected);
+    }
+}
 
 #define BH_DEFINE_TRIVIAL_INPUT_DECODER()                                            \
     static bool BH_UNUSED bh_decode_input(const uint8_t *data, size_t size,          \
@@ -46,28 +117,14 @@ static bool bh_output_eq(bh_output_t lhs, bh_output_t rhs);
 #define BH_ASSERT_AGREE(input_value)                                                  \
     do {                                                                              \
         const bh_input_t bh_input__ = (input_value);                                  \
-        const bh_output_t bh_ref__ = bh_reference(bh_input__);                        \
-        const bh_output_t bh_opt__ = bh_optimized(bh_input__);                        \
-        bh_contract(bh_input__, bh_ref__);                                            \
-        bh_contract(bh_input__, bh_opt__);                                            \
-        if (!bh_output_eq(bh_ref__, bh_opt__)) {                                      \
-            fprintf(stderr, "reference/optimized mismatch at %s:%d\n",                \
-                __FILE__, __LINE__);                                                  \
-            abort();                                                                  \
-        }                                                                             \
+        bh_assert_all_agree_at(__FILE__, __LINE__, bh_input__);                       \
     } while (0)
 
 #define BH_ASSERT_OPT_EQ(input_value, expected_value)                                 \
     do {                                                                              \
         const bh_input_t bh_input__ = (input_value);                                  \
         const bh_output_t bh_expected__ = (expected_value);                           \
-        const bh_output_t bh_actual__ = bh_optimized(bh_input__);                     \
-        bh_contract(bh_input__, bh_actual__);                                         \
-        if (!bh_output_eq(bh_actual__, bh_expected__)) {                              \
-            fprintf(stderr, "optimized output mismatch at %s:%d\n",                   \
-                __FILE__, __LINE__);                                                  \
-            abort();                                                                  \
-        }                                                                             \
+        bh_assert_all_eq_at(__FILE__, __LINE__, bh_input__, bh_expected__);           \
     } while (0)
 
 #if defined(BH_MODE_TEST)
@@ -107,14 +164,7 @@ static void bh_run_random_differential(void)
 
     for (i = 0; i < BH_RANDOM_TRIALS; ++i) {
         const bh_input_t input = bh_random_input(&state);
-        const bh_output_t ref = bh_reference(input);
-        const bh_output_t opt = bh_optimized(input);
-        bh_contract(input, ref);
-        bh_contract(input, opt);
-        if (!bh_output_eq(ref, opt)) {
-            fprintf(stderr, "random differential mismatch after %u cases\n", i + 1u);
-            abort();
-        }
+        bh_assert_all_agree_at(__FILE__, __LINE__, input);
     }
 }
 
@@ -133,20 +183,12 @@ static void (*const BH_UNUSED bh_tests_anchor_)(void) = bh_tests;
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
     bh_input_t input;
-    bh_output_t ref;
-    bh_output_t opt;
 
     if (!bh_decode_input(data, size, &input)) {
         return 0;
     }
 
-    ref = bh_reference(input);
-    opt = bh_optimized(input);
-    bh_contract(input, ref);
-    bh_contract(input, opt);
-    if (!bh_output_eq(ref, opt)) {
-        abort();
-    }
+    bh_assert_all_agree_at(__FILE__, __LINE__, input);
 
     return 0;
 }

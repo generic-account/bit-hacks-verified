@@ -25,16 +25,34 @@ Returns the number of one bits in the input as an integer in the inclusive range
 The optimized implementation performs lane-wise partial sums and finishes with a multiply-and-shift reduction.
 The reference implementation is intentionally direct so differential testing has an obvious oracle.
 
-## Optimized Implementation
+## Optimized Implementations
+
+### swar
 
 ```c
-bh_output_t bh_optimized(bh_input_t input)
+bh_output_t bh_optimized_swar(bh_input_t input)
 {
     input = input - ((input >> 1) & UINT64_C(0x5555555555555555));
     input = (input & UINT64_C(0x3333333333333333)) +
         ((input >> 2) & UINT64_C(0x3333333333333333));
     input = (input + (input >> 4)) & UINT64_C(0x0f0f0f0f0f0f0f0f);
     return (bh_output_t)((input * UINT64_C(0x0101010101010101)) >> 56);
+}
+```
+
+### kernighan
+
+```c
+bh_output_t bh_optimized_kernighan(bh_input_t input)
+{
+    bh_output_t count = 0;
+
+    while (input != 0u) {
+        input &= input - 1u;
+        ++count;
+    }
+
+    return count;
 }
 ```
 

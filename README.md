@@ -1,17 +1,17 @@
 # bit-hacks-verified
 
-Verifies bit hacks (for converting 32 to 64 bit hacks) and compiles to static website.
+Verifies bit hacks and publishes them as a static site.
 
-Each file has:
+Each file in `src/hacks/` has:
 
 - TOML metadata in a C comment at the top
-- typedefs for bh_input_t and bh_output_t
-- bh_contract
-- bh_reference
-- bh_optimized
-- bh_tests
+- `typedef`s for `bh_input_t` and `bh_output_t`
+- `bh_contract`
+- `bh_reference`
+- one or more optimized implementations declared in `BH_IMPLS(X)`
+- `bh_tests`
 
-Shared harness in src/include/bh/
+Shared harness code lives in `src/include/bh/`.
 
 ## Build
 
@@ -31,22 +31,4 @@ Generated outputs:
 - Tests and fuzzers: build/
 - Regenerated Jekyll site content: site/
 
-## Sources
-
-https://graphics.stanford.edu/~seander/bithacks.html
-
-https://en.wikipedia.org/wiki/HAKMEM
-
-https://en.wikipedia.org/wiki/Hacker%27s_Delight
-
-https://www.chessprogramming.org/Bit-Twiddling
-
-https://catonmat.net/low-level-bit-hacks
-
-https://leveluppp.ghost.io/advanced-bit-hacks
-
-https://cp-algorithms.com/algebra/bit-manipulation.html
-
-more to come
-
-hi
+The site content under `site/` is generated from the hack files.
