@@ -15,6 +15,11 @@ permalink: "/hacks/is_nonnegative_int64/"
 
 Tests whether a 64-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives.
 
+## Types
+
+- Input: `int64_t`
+- Output: `int64_t`
+
 ## Contract
 
 Returns 0 when the input is negative and 1 when the input is zero or positive.
@@ -27,6 +32,9 @@ The classic form flips the high-bit test so that non-negative values map to 1 an
 ## Optimized Implementation
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_optimized_unsigned_shift(bh_input_t input)
 {
     return 1 ^ (bh_output_t)((uint64_t)input >> 63);
@@ -36,6 +44,9 @@ bh_output_t bh_optimized_unsigned_shift(bh_input_t input)
 ## Reference Implementation
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_reference(bh_input_t input)
 {
     return (input < 0) ? 0 : 1;

@@ -15,6 +15,11 @@ permalink: "/hacks/sign_mask_int64/"
 
 Computes a sign mask for a 64-bit integer, returning -1 for negative inputs and 0 otherwise.
 
+## Types
+
+- Input: `int64_t`
+- Output: `int64_t`
+
 ## Contract
 
 Returns -1 when the input is negative and 0 when the input is zero or positive.
@@ -30,6 +35,9 @@ The arithmetic-shift implementation is shorter, but it depends on right-shifting
 ### unsigned_shift
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_optimized_unsigned_shift(bh_input_t input)
 {
     return -(bh_output_t)((uint64_t)input >> 63);
@@ -39,6 +47,9 @@ bh_output_t bh_optimized_unsigned_shift(bh_input_t input)
 ### arithmetic_shift
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_optimized_arithmetic_shift(bh_input_t input)
 {
     return input >> 63;
@@ -48,6 +59,9 @@ bh_output_t bh_optimized_arithmetic_shift(bh_input_t input)
 ## Reference Implementation
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_reference(bh_input_t input)
 {
     return -(bh_output_t)(input < 0);

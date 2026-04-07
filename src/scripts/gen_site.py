@@ -68,6 +68,41 @@ def extract_impls(text: str) -> list[tuple[str, str]]:
     return impls
 
 
+def extract_typedef_decl(text: str, name: str) -> str:
+    typedef_start = 0
+
+    while True:
+        typedef_start = text.find("typedef", typedef_start)
+        if typedef_start < 0:
+            raise ValueError(f"missing typedef for {name}")
+
+        index = typedef_start
+        brace_depth = 0
+        while index < len(text):
+            char = text[index]
+            if char == "{":
+                brace_depth += 1
+            elif char == "}":
+                brace_depth -= 1
+            elif char == ";" and brace_depth == 0:
+                decl = text[typedef_start:index + 1].strip()
+                if re.search(rf"\b{name}\b\s*;$", decl):
+                    return decl
+                typedef_start = index + 1
+                break
+            index += 1
+        else:
+            raise ValueError(f"unterminated typedef for {name}")
+
+
+def typedef_display_name(typedef_decl: str, name: str) -> str:
+    normalized = " ".join(typedef_decl.split())
+    match = re.match(rf"typedef\s+(.+?)\s+{re.escape(name)}\s*;$", normalized)
+    if match is None:
+        return name
+    return match.group(1).strip()
+
+
 def md_list(items: list[str]) -> str:
     if not items:
         return "- None\n"
@@ -96,6 +131,8 @@ def slugify(text: str) -> str:
 
 
 def render_markdown(metadata: dict, relpath: str,
+    input_typedef: str, output_typedef: str,
+    input_label: str, output_label: str,
     optimized_impls: list[tuple[str, str]], reference_src: str) -> str:
     hack_url = f"/hacks/{metadata['hack_id']}/"
     front_matter = {
@@ -124,6 +161,11 @@ def render_markdown(metadata: dict, relpath: str,
             "",
             metadata["summary"],
             "",
+            "## Types",
+            "",
+            f"- Input: `{input_label}`",
+            f"- Output: `{output_label}`",
+            "",
             "## Contract",
             "",
             metadata["contract"],
@@ -135,6 +177,9 @@ def render_markdown(metadata: dict, relpath: str,
             "## Reference Implementation",
             "",
             "```c",
+            input_typedef,
+            output_typedef,
+            "",
             reference_src,
             "```",
             "",
@@ -154,6 +199,9 @@ def render_markdown(metadata: dict, relpath: str,
             "## Optimized Implementation",
             "",
             "```c",
+            input_typedef,
+            output_typedef,
+            "",
             optimized_impls[0][1],
             "```",
             "",
@@ -169,6 +217,9 @@ def render_markdown(metadata: dict, relpath: str,
                     f"### {impl_name}",
                     "",
                     "```c",
+                    input_typedef,
+                    output_typedef,
+                    "",
                     impl_src,
                     "```",
                     "",
@@ -186,8 +237,6 @@ def render_index(records: list[dict]) -> str:
         "---",
         "",
         GENERATED_COMMENT,
-        "",
-        "# Bit Hacks",
         "",
         "Standalone C implementations with differential verification, sanitizers, and fuzz smoke coverage.",
         "",
@@ -262,11 +311,20 @@ def main() -> None:
             (impl_name, extract_function(text, impl_fn))
             for impl_name, impl_fn in extract_impls(text)
         ]
+        input_typedef = extract_typedef_decl(text, "bh_input_t")
+        output_typedef = extract_typedef_decl(text, "bh_output_t")
+        input_label = typedef_display_name(input_typedef, "bh_input_t")
+        output_label = typedef_display_name(output_typedef, "bh_output_t")
         reference_src = extract_function(text, "bh_reference")
         relpath = str(hack_path.relative_to(ROOT))
         hack_url = f"/hacks/{metadata['hack_id']}/"
 
-        markdown = render_markdown(metadata, relpath, optimized_impls, reference_src)
+        markdown = render_markdown(
+            metadata, relpath,
+            input_typedef, output_typedef,
+            input_label, output_label,
+            optimized_impls, reference_src
+        )
         md_out = HACKS_OUT_DIR / f"{metadata['hack_id']}.md"
         md_out.write_text(markdown, encoding="utf-8")
 

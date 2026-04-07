@@ -15,6 +15,11 @@ permalink: "/hacks/signum_int64/"
 
 Computes the signum of a 64-bit integer, returning -1 for negatives, 0 for zero, and +1 for positives.
 
+## Types
+
+- Input: `int64_t`
+- Output: `int64_t`
+
 ## Contract
 
 Returns -1 when the input is negative, 0 when the input is zero, and +1 when the input is positive.
@@ -29,6 +34,9 @@ The shift-based implementations match the classic bit-hack forms, with the arith
 ### comparisons
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_optimized_comparisons(bh_input_t input)
 {
     return (input > 0) - (input < 0);
@@ -38,6 +46,9 @@ bh_output_t bh_optimized_comparisons(bh_input_t input)
 ### unsigned_shift
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_optimized_unsigned_shift(bh_input_t input)
 {
     return (bh_output_t)(input != 0) | -(bh_output_t)((uint64_t)input >> 63);
@@ -47,6 +58,9 @@ bh_output_t bh_optimized_unsigned_shift(bh_input_t input)
 ### arithmetic_shift
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_optimized_arithmetic_shift(bh_input_t input)
 {
     return (bh_output_t)(input != 0) | (input >> 63);
@@ -56,6 +70,9 @@ bh_output_t bh_optimized_arithmetic_shift(bh_input_t input)
 ## Reference Implementation
 
 ```c
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
+
 bh_output_t bh_reference(bh_input_t input)
 {
     return (input > 0) - (input < 0);

@@ -15,6 +15,11 @@ permalink: "/hacks/popcount_swar64/"
 
 Counts the set bits in a 64-bit word using a classic SWAR reduction.
 
+## Types
+
+- Input: `uint64_t`
+- Output: `uint32_t`
+
 ## Contract
 
 Returns the number of one bits in the input as an integer in the inclusive range [0, 64].
@@ -29,6 +34,9 @@ The reference implementation is intentionally direct so differential testing has
 ### swar
 
 ```c
+typedef uint64_t bh_input_t;
+typedef uint32_t bh_output_t;
+
 bh_output_t bh_optimized_swar(bh_input_t input)
 {
     input = input - ((input >> 1) & UINT64_C(0x5555555555555555));
@@ -42,6 +50,9 @@ bh_output_t bh_optimized_swar(bh_input_t input)
 ### kernighan
 
 ```c
+typedef uint64_t bh_input_t;
+typedef uint32_t bh_output_t;
+
 bh_output_t bh_optimized_kernighan(bh_input_t input)
 {
     bh_output_t count = 0;
@@ -58,6 +69,9 @@ bh_output_t bh_optimized_kernighan(bh_input_t input)
 ## Reference Implementation
 
 ```c
+typedef uint64_t bh_input_t;
+typedef uint32_t bh_output_t;
+
 bh_output_t bh_reference(bh_input_t input)
 {
     bh_output_t count = 0;
