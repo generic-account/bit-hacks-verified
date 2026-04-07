@@ -35,6 +35,40 @@
     ]
   },
   {
+    "title": "Compute the maximum of two 64-bit integers",
+    "hack_id": "max_int64_pair",
+    "tags": [
+      "integer",
+      "maximum",
+      "comparison",
+      "branchless"
+    ],
+    "summary": "Computes the maximum of two 64-bit integers without branching.",
+    "contract": "Returns the larger of the two input values.",
+    "path": "src/hacks/max_int64_pair.c",
+    "url": "/hacks/max_int64_pair/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax"
+    ]
+  },
+  {
+    "title": "Compute the minimum of two 64-bit integers",
+    "hack_id": "min_int64_pair",
+    "tags": [
+      "integer",
+      "minimum",
+      "comparison",
+      "branchless"
+    ],
+    "summary": "Computes the minimum of two 64-bit integers without branching.",
+    "contract": "Returns the smaller of the two input values.",
+    "path": "src/hacks/min_int64_pair.c",
+    "url": "/hacks/min_int64_pair/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax"
+    ]
+  },
+  {
     "title": "Compute the sign mask of a 64-bit integer (-1/0)",
     "hack_id": "sign_mask_int64",
     "tags": [
