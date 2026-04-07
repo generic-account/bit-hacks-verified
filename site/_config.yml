@@ -1,5 +1,5 @@
-title: Verified Bit Hacks
-description: Formally verified low-level tricks and optimizations
+title: Bit Hacks
+description: Bit hacks with shared test, sanitizer, fuzz, and documentation pipelines
 theme: jekyll-theme-minimal
 
 url: "https://generic-account.github.io"
@@ -13,9 +13,9 @@ markdown: kramdown
 highlighter: rouge
 
 collections:
-  proofs:
+  hacks:
     output: true
-    permalink: /proofs/:name/
+    permalink: /hacks/:name/
 
 # Optionalminimal nav links
 # nav:

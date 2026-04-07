@@ -47,7 +47,7 @@ site:
 	$(PYTHON) src/scripts/gen_site.py
 
 site-check: site
-	@status="$$(git status --porcelain --untracked-files=all -- site/index.md site/search.json site/_proofs site/tags)"; \
+	@status="$$(git status --porcelain --untracked-files=all -- site/index.md site/search.json site/_hacks site/tags)"; \
 	if [ -n "$$status" ]; then \
 		printf '%s\n' "$$status"; \
 		echo "Generated site files are out of date; run 'make site' and commit the results."; \

@@ -10,7 +10,7 @@ import tomllib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HACKS_DIR = ROOT / "src" / "hacks"
 SITE_DIR = ROOT / "site"
-PROOFS_DIR = SITE_DIR / "_proofs"
+HACKS_OUT_DIR = SITE_DIR / "_hacks"
 TAGS_DIR = SITE_DIR / "tags"
 SEARCH_JSON = SITE_DIR / "search.json"
 INDEX_MD = SITE_DIR / "index.md"
@@ -97,9 +97,9 @@ def slugify(text: str) -> str:
 
 def render_markdown(metadata: dict, relpath: str,
     optimized_impls: list[tuple[str, str]], reference_src: str) -> str:
-    proof_url = f"/proofs/{metadata['hack_id']}/"
+    hack_url = f"/hacks/{metadata['hack_id']}/"
     front_matter = {
-        "layout": "proof",
+        "layout": "hack",
         "title": metadata["title"],
         "summary": metadata["summary"],
         "hack_id": metadata["hack_id"],
@@ -107,7 +107,7 @@ def render_markdown(metadata: dict, relpath: str,
         "search_keywords": metadata["tags"],
         "source_path": relpath,
         "slug": metadata["hack_id"],
-        "permalink": proof_url,
+        "permalink": hack_url,
     }
     lines = ["---"]
     for key, value in front_matter.items():
@@ -183,12 +183,12 @@ def render_index(records: list[dict]) -> str:
     lines = [
         "---",
         'layout: default',
-        'title: Verified Bit Hacks',
+        'title: Bit Hacks',
         "---",
         "",
         GENERATED_COMMENT,
         "",
-        "# Verified Bit Hacks",
+        "# Bit Hacks",
         "",
         "Standalone C implementations with differential verification, sanitizers, and fuzz smoke coverage.",
         "",
@@ -205,9 +205,9 @@ def render_index(records: list[dict]) -> str:
     for record in records:
         summary = record["summary"]
         tags = ", ".join(record["tags"])
-        proof_path = record["url"]
+        hack_path = record["url"]
         lines.append(
-            f'- [{record["title"]}](' + '{{ "' + proof_path + '" | relative_url }}' + ')'
+            f'- [{record["title"]}](' + '{{ "' + hack_path + '" | relative_url }}' + ')'
             f'{" — " + summary if summary else ""}'
             f'{" [" + tags + "]" if tags else ""}'
         )
@@ -240,9 +240,9 @@ def render_tag_index(tag: str) -> str:
 
 
 def main() -> None:
-    ensure_dir(PROOFS_DIR)
+    ensure_dir(HACKS_OUT_DIR)
     ensure_dir(TAGS_DIR)
-    clear_generated_tree(PROOFS_DIR)
+    clear_generated_tree(HACKS_OUT_DIR)
     clear_generated_tree(TAGS_DIR)
 
     records = []
@@ -256,10 +256,10 @@ def main() -> None:
         ]
         reference_src = extract_function(text, "bh_reference")
         relpath = str(hack_path.relative_to(ROOT))
-        proof_url = f"/proofs/{metadata['hack_id']}/"
+        hack_url = f"/hacks/{metadata['hack_id']}/"
 
         markdown = render_markdown(metadata, relpath, optimized_impls, reference_src)
-        md_out = PROOFS_DIR / f"{metadata['hack_id']}.md"
+        md_out = HACKS_OUT_DIR / f"{metadata['hack_id']}.md"
         md_out.write_text(markdown, encoding="utf-8")
 
         records.append(
@@ -271,7 +271,7 @@ def main() -> None:
                 "summary": metadata["summary"],
                 "contract": metadata["contract"],
                 "path": relpath,
-                "url": proof_url,
+                "url": hack_url,
                 "sources": metadata["sources"],
             }
         )

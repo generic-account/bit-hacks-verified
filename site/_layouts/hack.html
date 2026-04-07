@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<article class="proof">
+<article class="hack">
   <h1>{{ page.title }}</h1>
   {% if page.summary %}
     <p>{{ page.summary }}</p>
@@ -25,17 +25,4 @@ layout: default
   <hr/>
 
   {{ content }}
-
-  {% if page.related and page.related.size > 0 %}
-    <hr/>
-    <h3>Related</h3>
-    <ul>
-      {% for slug in page.related %}
-        {% assign hit = site.proofs | where: "slug", slug | first %}
-        {% if hit %}
-          <li><a href="{{ hit.url | relative_url }}">{{ hit.title }}</a></li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  {% endif %}
 </article>

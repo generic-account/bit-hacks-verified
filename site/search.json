@@ -17,7 +17,7 @@
     "summary": "Counts the set bits in a 64-bit word using a classic SWAR reduction.",
     "contract": "Returns the number of one bits in the input as an integer in the inclusive range [0, 64].",
     "path": "src/hacks/popcount_swar64.c",
-    "url": "/proofs/popcount_swar64/",
+    "url": "/hacks/popcount_swar64/",
     "sources": [
       "https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel",
       "https://en.wikipedia.org/wiki/Hamming_weight"
