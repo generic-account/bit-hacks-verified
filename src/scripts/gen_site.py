@@ -248,13 +248,6 @@ def render_index(records: list[dict], sources: list[str]) -> str:
         "",
         '## [Search]({{ "/search.html" | relative_url }})',
         "",
-        "## Verification",
-        "",
-        "- Strict Clang warnings in test and fuzz builds",
-        "- Hand-written edge-case assertions in each `bh_tests` implementation",
-        "- Deterministic random differential testing in generated test mains",
-        "- libFuzzer smoke runs with address and undefined behavior sanitizers",
-        "",
         "## Hacks",
         "",
         '<ul class="hack-list">',
@@ -274,7 +267,21 @@ def render_index(records: list[dict], sources: list[str]) -> str:
             + (' <span class="tag-brackets">[' + tag_links + ']</span>' if tag_links else "")
             + '</li>'
         )
-    lines.extend(["</ul>", "", "## Sources", ""])
+    lines.extend(
+        [
+            "</ul>",
+            "",
+            "## Verification",
+            "",
+            "- Strict Clang warnings in test and fuzz builds",
+            "- Hand-written edge-case assertions in each `bh_tests` implementation",
+            "- Deterministic random differential testing in generated test mains",
+            "- libFuzzer smoke runs with address and undefined behavior sanitizers",
+            "",
+            "## Sources",
+            "",
+        ]
+    )
     for source in sources:
         lines.append(f"- {source}")
     lines.append("")

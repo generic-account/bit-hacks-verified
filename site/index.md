@@ -9,13 +9,6 @@ Standalone C implementations with differential verification, sanitizers, and fuz
 
 ## [Search]({{ "/search.html" | relative_url }})
 
-## Verification
-
-- Strict Clang warnings in test and fuzz builds
-- Hand-written edge-case assertions in each `bh_tests` implementation
-- Deterministic random differential testing in generated test mains
-- libFuzzer smoke runs with address and undefined behavior sanitizers
-
 ## Hacks
 
 <ul class="hack-list">
@@ -32,6 +25,13 @@ Standalone C implementations with differential verification, sanitizers, and fuz
 <li><a href="{{ "/hacks/sign_extend_variable_int64/" | relative_url }}">Sign-extend from a variable bit width</a> — Sign-extends a value represented in a runtime-selected bit width into a full int64_t. <span class="tag-brackets">[<a href="{{ "/tags/integer/" | relative_url }}">integer</a>, <a href="{{ "/tags/sign-extension/" | relative_url }}">sign-extension</a>, <a href="{{ "/tags/variable-width/" | relative_url }}">variable-width</a>, <a href="{{ "/tags/branchless/" | relative_url }}">branchless</a>]</span></li>
 <li><a href="{{ "/hacks/signum_int64/" | relative_url }}">Signum (-1/0/+1)</a> — Computes the signum of a 64-bit integer, returning -1 for negatives, 0 for zero, and +1 for positives. <span class="tag-brackets">[<a href="{{ "/tags/integer/" | relative_url }}">integer</a>, <a href="{{ "/tags/sign/" | relative_url }}">sign</a>, <a href="{{ "/tags/bit-shift/" | relative_url }}">bit-shift</a>, <a href="{{ "/tags/branchless/" | relative_url }}">branchless</a>]</span></li>
 </ul>
+
+## Verification
+
+- Strict Clang warnings in test and fuzz builds
+- Hand-written edge-case assertions in each `bh_tests` implementation
+- Deterministic random differential testing in generated test mains
+- libFuzzer smoke runs with address and undefined behavior sanitizers
 
 ## Sources
 
