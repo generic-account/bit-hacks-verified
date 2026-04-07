@@ -13,6 +13,10 @@
 #define BH_RANDOM_TRIALS 10000u
 #endif
 
+#ifndef BH_RANDOM_INPUT
+#define BH_RANDOM_INPUT(state_ptr) bh_default_random_input(state_ptr)
+#endif
+
 static void bh_contract(bh_input_t input, bh_output_t output);
 static bh_output_t bh_reference(bh_input_t input);
 static void bh_tests(void);
@@ -138,7 +142,7 @@ static uint64_t bh_prng_next(uint64_t *state)
     return x;
 }
 
-static bh_input_t bh_random_input(uint64_t *state)
+static bh_input_t BH_UNUSED bh_default_random_input(uint64_t *state)
 {
     bh_input_t input;
     unsigned char *bytes = (unsigned char *)&input;
@@ -163,7 +167,7 @@ static void bh_run_random_differential(void)
     unsigned i;
 
     for (i = 0; i < BH_RANDOM_TRIALS; ++i) {
-        const bh_input_t input = bh_random_input(&state);
+        const bh_input_t input = BH_RANDOM_INPUT(&state);
         bh_assert_all_agree_at(__FILE__, __LINE__, input);
     }
 }

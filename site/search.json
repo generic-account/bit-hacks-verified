@@ -171,6 +171,23 @@
     ]
   },
   {
+    "title": "Sign-extend from a variable bit width",
+    "hack_id": "sign_extend_variable_int64",
+    "tags": [
+      "integer",
+      "sign-extension",
+      "variable-width",
+      "branchless"
+    ],
+    "summary": "Sign-extends a value represented in a runtime-selected bit width into a full int64_t.",
+    "contract": "For bits in the inclusive range [1, 64], interprets the low `bits` bits of `x` as a signed two's-complement integer and returns the corresponding int64_t value.",
+    "path": "src/hacks/sign_extend_variable_int64.c",
+    "url": "/hacks/sign_extend_variable_int64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#VariableSignExtend"
+    ]
+  },
+  {
     "title": "Signum (-1/0/+1)",
     "hack_id": "signum_int64",
     "tags": [
