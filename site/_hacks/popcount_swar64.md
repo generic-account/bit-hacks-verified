@@ -4,7 +4,6 @@ title: "64-bit SWAR popcount"
 summary: "Counts the set bits in a 64-bit word using a classic SWAR reduction."
 hack_id: "popcount_swar64"
 tags: ["bitcount", "integer", "popcount", "swar"]
-search_keywords: ["bitcount", "integer", "popcount", "swar"]
 source_path: "src/hacks/popcount_swar64.c"
 slug: "popcount_swar64"
 permalink: "/hacks/popcount_swar64/"

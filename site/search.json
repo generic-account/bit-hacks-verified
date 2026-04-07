@@ -8,12 +8,6 @@
       "popcount",
       "swar"
     ],
-    "search_keywords": [
-      "bitcount",
-      "integer",
-      "popcount",
-      "swar"
-    ],
     "summary": "Counts the set bits in a 64-bit word using a classic SWAR reduction.",
     "contract": "Returns the number of one bits in the input as an integer in the inclusive range [0, 64].",
     "path": "src/hacks/popcount_swar64.c",
