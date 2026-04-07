@@ -32,3 +32,8 @@ Generated outputs:
 - Regenerated Jekyll site content: site/
 
 The site content under `site/` is generated from the hack files.
+
+## Sources
+
+- https://graphics.stanford.edu/~seander/bithacks.html
+- https://en.wikipedia.org/wiki/Hamming_weight

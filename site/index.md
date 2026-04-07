@@ -35,12 +35,5 @@ Standalone C implementations with differential verification, sanitizers, and fuz
 
 ## Sources
 
-- https://graphics.stanford.edu/~seander/bithacks.html#IntegerAbs
-- https://graphics.stanford.edu/~seander/bithacks.html#DetermineIfPowerOf2
-- https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign
-- https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax
-- https://graphics.stanford.edu/~seander/bithacks.html#DetectOppositeSigns
-- https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
+- https://graphics.stanford.edu/~seander/bithacks.html
 - https://en.wikipedia.org/wiki/Hamming_weight
-- https://graphics.stanford.edu/~seander/bithacks.html#FixedSignExtend
-- https://graphics.stanford.edu/~seander/bithacks.html#VariableSignExtend
