@@ -8,6 +8,7 @@ SAN_DIR := $(BUILD_DIR)/san-test
 FUZZ_DIR := $(BUILD_DIR)/fuzz
 FUZZ_ARTIFACTS_DIR := $(BUILD_DIR)/fuzz-artifacts
 LOG_DIR := $(BUILD_DIR)/logs
+CI_STATE_DIR := $(BUILD_DIR)/ci-state
 
 HACKS := $(sort $(wildcard src/hacks/*.c))
 
@@ -18,7 +19,7 @@ TEST_CFLAGS := $(COMMON_CFLAGS) $(WARNING_FLAGS)
 SAN_CFLAGS := -std=c11 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls $(WARNING_FLAGS)
 FUZZ_CFLAGS := -std=c11 -O1 -g -fsanitize=fuzzer,address,undefined $(WARNING_FLAGS)
 
-.PHONY: all warnings test san-test fuzz-smoke site site-check ci clean
+.PHONY: all warnings test san-test fuzz-smoke site site-check ci ci-all clean
 
 all: ci
 
@@ -106,41 +107,55 @@ site-check: site
 
 ci:
 	@set -eu; \
-	mkdir -p $(BUILD_DIR)/warnings/test $(BUILD_DIR)/warnings/fuzz $(TEST_DIR) $(SAN_DIR) $(FUZZ_DIR) $(FUZZ_ARTIFACTS_DIR) $(LOG_DIR); \
+	mkdir -p $(BUILD_DIR)/warnings/test $(BUILD_DIR)/warnings/fuzz $(TEST_DIR) $(SAN_DIR) $(FUZZ_DIR) $(FUZZ_ARTIFACTS_DIR) $(LOG_DIR) $(CI_STATE_DIR); \
 	printf '%-28s | %-8s | %-8s | %-8s | %-8s\n' "hack" "warnings" "test" "san" "fuzz"; \
 	printf '%-28s-+-%-8s-+-%-8s-+-%-8s-+-%-8s\n' "----------------------------" "--------" "--------" "--------" "--------"; \
 	for src in $(HACKS); do \
 		name="$$(basename "$$src" .c)"; \
-		warnings="OK"; \
-		test_status="OK"; \
-		san_status="OK"; \
-		fuzz_status="OK"; \
-		log="$(LOG_DIR)/warnings-$$name.log"; \
-		if ! ( $(CC) $(CPPFLAGS) $(TEST_CFLAGS) -DBH_MODE_TEST -c "$$src" -o "$(BUILD_DIR)/warnings/test/$$name.o" >"$$log" 2>&1 && \
-		       $(CC) $(CPPFLAGS) $(FUZZ_CFLAGS) -DBH_MODE_FUZZ -c "$$src" -o "$(BUILD_DIR)/warnings/fuzz/$$name.o" >>"$$log" 2>&1 ); then \
-			warnings="BAD"; \
-		fi; \
-		if [ "$$warnings" = "OK" ]; then rm -f "$$log"; fi; \
-		log="$(LOG_DIR)/test-$$name.log"; \
-		if [ "$$warnings" = "OK" ] && $(CC) $(CPPFLAGS) $(TEST_CFLAGS) -DBH_MODE_TEST "$$src" -o "$(TEST_DIR)/$$name" >"$$log" 2>&1 && \
-		   "$(TEST_DIR)/$$name" >>"$$log" 2>&1; then \
-			rm -f "$$log"; \
+		state_file="$(CI_STATE_DIR)/$$name.sha256"; \
+		current_hash="$$(sha256sum "$$src" src/include/bh/harness.h Makefile | sha256sum | cut -d' ' -f1)"; \
+		if [ -f "$$state_file" ] && [ "$$(cat "$$state_file")" = "$$current_hash" ]; then \
+			warnings="SKIP"; \
+			test_status="SKIP"; \
+			san_status="SKIP"; \
+			fuzz_status="SKIP"; \
 		else \
-			test_status="BAD"; \
-		fi; \
-		log="$(LOG_DIR)/san-test-$$name.log"; \
-		if [ "$$warnings" = "OK" ] && $(CC) $(CPPFLAGS) $(SAN_CFLAGS) -DBH_MODE_TEST "$$src" -o "$(SAN_DIR)/$$name" >"$$log" 2>&1 && \
-		   ASAN_OPTIONS=detect_leaks=0 UBSAN_OPTIONS=print_stacktrace=1 "$(SAN_DIR)/$$name" >>"$$log" 2>&1; then \
-			rm -f "$$log"; \
-		else \
-			san_status="BAD"; \
-		fi; \
-		log="$(LOG_DIR)/fuzz-smoke-$$name.log"; \
-		if [ "$$warnings" = "OK" ] && $(CC) $(CPPFLAGS) $(FUZZ_CFLAGS) -DBH_MODE_FUZZ "$$src" -o "$(FUZZ_DIR)/$$name" >"$$log" 2>&1 && \
-		   ASAN_OPTIONS=detect_leaks=0 "$(FUZZ_DIR)/$$name" -runs=1000 -artifact_prefix=$(FUZZ_ARTIFACTS_DIR)/$$name- >>"$$log" 2>&1; then \
-			rm -f "$$log"; \
-		else \
-			fuzz_status="BAD"; \
+			warnings="OK"; \
+			test_status="OK"; \
+			san_status="OK"; \
+			fuzz_status="OK"; \
+			log="$(LOG_DIR)/warnings-$$name.log"; \
+			if ! ( $(CC) $(CPPFLAGS) $(TEST_CFLAGS) -DBH_MODE_TEST -c "$$src" -o "$(BUILD_DIR)/warnings/test/$$name.o" >"$$log" 2>&1 && \
+			       $(CC) $(CPPFLAGS) $(FUZZ_CFLAGS) -DBH_MODE_FUZZ -c "$$src" -o "$(BUILD_DIR)/warnings/fuzz/$$name.o" >>"$$log" 2>&1 ); then \
+				warnings="BAD"; \
+			fi; \
+			if [ "$$warnings" = "OK" ]; then rm -f "$$log"; fi; \
+			log="$(LOG_DIR)/test-$$name.log"; \
+			if [ "$$warnings" = "OK" ] && $(CC) $(CPPFLAGS) $(TEST_CFLAGS) -DBH_MODE_TEST "$$src" -o "$(TEST_DIR)/$$name" >"$$log" 2>&1 && \
+			   "$(TEST_DIR)/$$name" >>"$$log" 2>&1; then \
+				rm -f "$$log"; \
+			else \
+				test_status="BAD"; \
+			fi; \
+			log="$(LOG_DIR)/san-test-$$name.log"; \
+			if [ "$$warnings" = "OK" ] && $(CC) $(CPPFLAGS) $(SAN_CFLAGS) -DBH_MODE_TEST "$$src" -o "$(SAN_DIR)/$$name" >"$$log" 2>&1 && \
+			   ASAN_OPTIONS=detect_leaks=0 UBSAN_OPTIONS=print_stacktrace=1 "$(SAN_DIR)/$$name" >>"$$log" 2>&1; then \
+				rm -f "$$log"; \
+			else \
+				san_status="BAD"; \
+			fi; \
+			log="$(LOG_DIR)/fuzz-smoke-$$name.log"; \
+			if [ "$$warnings" = "OK" ] && $(CC) $(CPPFLAGS) $(FUZZ_CFLAGS) -DBH_MODE_FUZZ "$$src" -o "$(FUZZ_DIR)/$$name" >"$$log" 2>&1 && \
+			   ASAN_OPTIONS=detect_leaks=0 "$(FUZZ_DIR)/$$name" -runs=1000 -artifact_prefix=$(FUZZ_ARTIFACTS_DIR)/$$name- >>"$$log" 2>&1; then \
+				rm -f "$$log"; \
+			else \
+				fuzz_status="BAD"; \
+			fi; \
+			if [ "$$warnings" = "OK" ] && [ "$$test_status" = "OK" ] && [ "$$san_status" = "OK" ] && [ "$$fuzz_status" = "OK" ]; then \
+				printf '%s\n' "$$current_hash" >"$$state_file"; \
+			else \
+				rm -f "$$state_file"; \
+			fi; \
 		fi; \
 		printf '%-28s | %-8s | %-8s | %-8s | %-8s\n' "$$name" "$$warnings" "$$test_status" "$$san_status" "$$fuzz_status"; \
 		for stage in warnings test san-test fuzz-smoke; do \
@@ -164,7 +179,7 @@ ci:
 		site_status="BAD"; \
 	fi; \
 	printf '%-28s | %-8s | %-8s | %-8s | %-8s\n' "site" "$$site_status" "-" "-" "-"; \
-	if [ "$$site_status" != "OK" ]; then \
+	if [ "$$site_status" = "BAD" ]; then \
 		echo "Failure in site generation."; \
 		exit 1; \
 	fi; \
@@ -176,6 +191,10 @@ ci:
 		echo "Generated site files are out of date; run 'make site' and commit the results."; \
 		exit 1; \
 	fi
+
+ci-all:
+	@rm -rf $(CI_STATE_DIR)
+	@$(MAKE) ci
 
 clean:
 	rm -rf $(BUILD_DIR)
