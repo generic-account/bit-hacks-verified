@@ -16,5 +16,73 @@
       "https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel",
       "https://en.wikipedia.org/wiki/Hamming_weight"
     ]
+  },
+  {
+    "title": "Compute the sign mask of a 32-bit integer (-1/0)",
+    "hack_id": "sign_mask_int32",
+    "tags": [
+      "integer",
+      "sign",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Computes a sign mask for a 32-bit integer, returning -1 for negative inputs and 0 otherwise.",
+    "contract": "Returns -1 when the input is negative and 0 when the input is zero or positive.",
+    "path": "src/hacks/sign_mask_int32.c",
+    "url": "/hacks/sign_mask_int32/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
+    ]
+  },
+  {
+    "title": "Compute the sign of a 32-bit integer (-1/+1)",
+    "hack_id": "sign_pm1_int32",
+    "tags": [
+      "integer",
+      "sign",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Computes the sign of a 32-bit integer, returning -1 for negative inputs and +1 otherwise.",
+    "contract": "Returns -1 when the input is negative and +1 when the input is zero or positive.",
+    "path": "src/hacks/sign_pm1_int32.c",
+    "url": "/hacks/sign_pm1_int32/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
+    ]
+  },
+  {
+    "title": "Compute the signum of a 32-bit integer (-1/0/+1)",
+    "hack_id": "signum_int32",
+    "tags": [
+      "integer",
+      "sign",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Computes the signum of a 32-bit integer, returning -1 for negatives, 0 for zero, and +1 for positives.",
+    "contract": "Returns -1 when the input is negative, 0 when the input is zero, and +1 when the input is positive.",
+    "path": "src/hacks/signum_int32.c",
+    "url": "/hacks/signum_int32/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
+    ]
+  },
+  {
+    "title": "Test whether a 32-bit integer is non-negative (0/1)",
+    "hack_id": "is_nonnegative_int32",
+    "tags": [
+      "integer",
+      "sign",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Tests whether a 32-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives.",
+    "contract": "Returns 0 when the input is negative and 1 when the input is zero or positive.",
+    "path": "src/hacks/is_nonnegative_int32.c",
+    "url": "/hacks/is_nonnegative_int32/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
+    ]
   }
 ]
