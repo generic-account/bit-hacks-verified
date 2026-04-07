@@ -17,6 +17,23 @@
     ]
   },
   {
+    "title": "Conditionally set or clear bits",
+    "hack_id": "conditional_mask_uint64",
+    "tags": [
+      "integer",
+      "bit-mask",
+      "conditional",
+      "branchless"
+    ],
+    "summary": "Conditionally sets or clears the masked bits of a uint64_t word without branching.",
+    "contract": "Returns a copy of w where the bits selected by m are set when f is true and cleared when f is false. Bits outside m are unchanged.",
+    "path": "src/hacks/conditional_mask_uint64.c",
+    "url": "/hacks/conditional_mask_uint64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#ConditionalSetOrClearBitsWithoutBranching"
+    ]
+  },
+  {
     "title": "Is a power of two (0/1)",
     "hack_id": "is_power_of_two_uint64",
     "tags": [
