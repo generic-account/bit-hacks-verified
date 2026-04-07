@@ -18,6 +18,23 @@
     ]
   },
   {
+    "title": "Compute the absolute value of a 64-bit integer as uint64_t",
+    "hack_id": "abs_uint64_from_int64",
+    "tags": [
+      "integer",
+      "absolute-value",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Computes the absolute value of a 64-bit signed integer without branching, producing a uint64_t result.",
+    "contract": "Returns the absolute value of the input as uint64_t, including 2^63 for INT64_MIN.",
+    "path": "src/hacks/abs_uint64_from_int64.c",
+    "url": "/hacks/abs_uint64_from_int64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerAbs"
+    ]
+  },
+  {
     "title": "Compute the sign mask of a 64-bit integer (-1/0)",
     "hack_id": "sign_mask_int64",
     "tags": [
