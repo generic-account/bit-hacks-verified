@@ -80,6 +80,10 @@ pre, code, kbd, samp {
 }
 pre { border: 1px solid #333; padding: 0.9rem; overflow: auto; }
 code { border-radius: 4px; padding: 0.1em 0.35em; }
+pre code {
+  padding: 0;
+  border-radius: 0;
+}
 
 /* Blockquotes & tables */
 blockquote { color: #d0d0d0; border-left: 3px solid #333; }
