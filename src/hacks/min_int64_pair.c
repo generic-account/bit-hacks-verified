@@ -1,5 +1,5 @@
 /*
-title = "Compute the minimum of two 64-bit integers"
+title = "Minimum of two integers"
 hack_id = "min_int64_pair"
 tags = ["integer", "minimum", "comparison", "branchless"]
 summary = "Computes the minimum of two 64-bit integers without branching."

@@ -1,6 +1,6 @@
 ---
 layout: "hack"
-title: "Test whether a 64-bit integer is non-negative (0/1)"
+title: "Is non-negative (0/1)"
 summary: "Tests whether a 64-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives."
 hack_id: "is_nonnegative_int64"
 tags: ["integer", "sign", "bit-shift", "branchless"]

@@ -1,6 +1,6 @@
 ---
 layout: "hack"
-title: "Compute the signum of a 64-bit integer (-1/0/+1)"
+title: "Signum (-1/0/+1)"
 summary: "Computes the signum of a 64-bit integer, returning -1 for negatives, 0 for zero, and +1 for positives."
 hack_id: "signum_int64"
 tags: ["integer", "sign", "bit-shift", "branchless"]

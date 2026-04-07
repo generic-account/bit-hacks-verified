@@ -1,6 +1,91 @@
 [
   {
-    "title": "64-bit SWAR popcount",
+    "title": "Absolute value as uint64_t",
+    "hack_id": "abs_uint64_from_int64",
+    "tags": [
+      "integer",
+      "absolute-value",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Computes the absolute value of a 64-bit signed integer without branching, producing a uint64_t result.",
+    "contract": "Returns the absolute value of the input as uint64_t, including 2^63 for INT64_MIN.",
+    "path": "src/hacks/abs_uint64_from_int64.c",
+    "url": "/hacks/abs_uint64_from_int64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerAbs"
+    ]
+  },
+  {
+    "title": "Is non-negative (0/1)",
+    "hack_id": "is_nonnegative_int64",
+    "tags": [
+      "integer",
+      "sign",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Tests whether a 64-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives.",
+    "contract": "Returns 0 when the input is negative and 1 when the input is zero or positive.",
+    "path": "src/hacks/is_nonnegative_int64.c",
+    "url": "/hacks/is_nonnegative_int64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
+    ]
+  },
+  {
+    "title": "Maximum of two integers",
+    "hack_id": "max_int64_pair",
+    "tags": [
+      "integer",
+      "maximum",
+      "comparison",
+      "branchless"
+    ],
+    "summary": "Computes the maximum of two 64-bit integers without branching.",
+    "contract": "Returns the larger of the two input values.",
+    "path": "src/hacks/max_int64_pair.c",
+    "url": "/hacks/max_int64_pair/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax"
+    ]
+  },
+  {
+    "title": "Minimum of two integers",
+    "hack_id": "min_int64_pair",
+    "tags": [
+      "integer",
+      "minimum",
+      "comparison",
+      "branchless"
+    ],
+    "summary": "Computes the minimum of two 64-bit integers without branching.",
+    "contract": "Returns the smaller of the two input values.",
+    "path": "src/hacks/min_int64_pair.c",
+    "url": "/hacks/min_int64_pair/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax"
+    ]
+  },
+  {
+    "title": "Opposite signs",
+    "hack_id": "opposite_signs_int64_pair",
+    "tags": [
+      "integer",
+      "sign",
+      "xor",
+      "branchless"
+    ],
+    "summary": "Detects whether two 64-bit integers have opposite signs.",
+    "contract": "Returns true when exactly one input is negative, and false otherwise.",
+    "path": "src/hacks/opposite_signs_int64_pair.c",
+    "url": "/hacks/opposite_signs_int64_pair/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#DetectOppositeSigns"
+    ]
+  },
+  {
+    "title": "SWAR popcount",
     "hack_id": "popcount_swar64",
     "tags": [
       "bitcount",
@@ -18,75 +103,7 @@
     ]
   },
   {
-    "title": "Compute the absolute value of a 64-bit integer as uint64_t",
-    "hack_id": "abs_uint64_from_int64",
-    "tags": [
-      "integer",
-      "absolute-value",
-      "bit-shift",
-      "branchless"
-    ],
-    "summary": "Computes the absolute value of a 64-bit signed integer without branching, producing a uint64_t result.",
-    "contract": "Returns the absolute value of the input as uint64_t, including 2^63 for INT64_MIN.",
-    "path": "src/hacks/abs_uint64_from_int64.c",
-    "url": "/hacks/abs_uint64_from_int64/",
-    "sources": [
-      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerAbs"
-    ]
-  },
-  {
-    "title": "Compute the maximum of two 64-bit integers",
-    "hack_id": "max_int64_pair",
-    "tags": [
-      "integer",
-      "maximum",
-      "comparison",
-      "branchless"
-    ],
-    "summary": "Computes the maximum of two 64-bit integers without branching.",
-    "contract": "Returns the larger of the two input values.",
-    "path": "src/hacks/max_int64_pair.c",
-    "url": "/hacks/max_int64_pair/",
-    "sources": [
-      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax"
-    ]
-  },
-  {
-    "title": "Compute the minimum of two 64-bit integers",
-    "hack_id": "min_int64_pair",
-    "tags": [
-      "integer",
-      "minimum",
-      "comparison",
-      "branchless"
-    ],
-    "summary": "Computes the minimum of two 64-bit integers without branching.",
-    "contract": "Returns the smaller of the two input values.",
-    "path": "src/hacks/min_int64_pair.c",
-    "url": "/hacks/min_int64_pair/",
-    "sources": [
-      "https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax"
-    ]
-  },
-  {
-    "title": "Compute the sign mask of a 64-bit integer (-1/0)",
-    "hack_id": "sign_mask_int64",
-    "tags": [
-      "integer",
-      "sign",
-      "bit-shift",
-      "branchless"
-    ],
-    "summary": "Computes a sign mask for a 64-bit integer, returning -1 for negative inputs and 0 otherwise.",
-    "contract": "Returns -1 when the input is negative and 0 when the input is zero or positive.",
-    "path": "src/hacks/sign_mask_int64.c",
-    "url": "/hacks/sign_mask_int64/",
-    "sources": [
-      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
-    ]
-  },
-  {
-    "title": "Compute the sign of a 64-bit integer (-1/+1)",
+    "title": "Sign (-1/+1)",
     "hack_id": "sign_pm1_int64",
     "tags": [
       "integer",
@@ -103,7 +120,24 @@
     ]
   },
   {
-    "title": "Compute the signum of a 64-bit integer (-1/0/+1)",
+    "title": "Sign mask (-1/0)",
+    "hack_id": "sign_mask_int64",
+    "tags": [
+      "integer",
+      "sign",
+      "bit-shift",
+      "branchless"
+    ],
+    "summary": "Computes a sign mask for a 64-bit integer, returning -1 for negative inputs and 0 otherwise.",
+    "contract": "Returns -1 when the input is negative and 0 when the input is zero or positive.",
+    "path": "src/hacks/sign_mask_int64.c",
+    "url": "/hacks/sign_mask_int64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
+    ]
+  },
+  {
+    "title": "Signum (-1/0/+1)",
     "hack_id": "signum_int64",
     "tags": [
       "integer",
@@ -115,40 +149,6 @@
     "contract": "Returns -1 when the input is negative, 0 when the input is zero, and +1 when the input is positive.",
     "path": "src/hacks/signum_int64.c",
     "url": "/hacks/signum_int64/",
-    "sources": [
-      "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
-    ]
-  },
-  {
-    "title": "Detect whether two 64-bit integers have opposite signs",
-    "hack_id": "opposite_signs_int64_pair",
-    "tags": [
-      "integer",
-      "sign",
-      "xor",
-      "branchless"
-    ],
-    "summary": "Detects whether two 64-bit integers have opposite signs.",
-    "contract": "Returns true when exactly one input is negative, and false otherwise.",
-    "path": "src/hacks/opposite_signs_int64_pair.c",
-    "url": "/hacks/opposite_signs_int64_pair/",
-    "sources": [
-      "https://graphics.stanford.edu/~seander/bithacks.html#DetectOppositeSigns"
-    ]
-  },
-  {
-    "title": "Test whether a 64-bit integer is non-negative (0/1)",
-    "hack_id": "is_nonnegative_int64",
-    "tags": [
-      "integer",
-      "sign",
-      "bit-shift",
-      "branchless"
-    ],
-    "summary": "Tests whether a 64-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives.",
-    "contract": "Returns 0 when the input is negative and 1 when the input is zero or positive.",
-    "path": "src/hacks/is_nonnegative_int64.c",
-    "url": "/hacks/is_nonnegative_int64/",
     "sources": [
       "https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign"
     ]

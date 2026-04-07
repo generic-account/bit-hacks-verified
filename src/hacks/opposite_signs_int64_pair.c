@@ -1,5 +1,5 @@
 /*
-title = "Detect whether two 64-bit integers have opposite signs"
+title = "Opposite signs"
 hack_id = "opposite_signs_int64_pair"
 tags = ["integer", "sign", "xor", "branchless"]
 summary = "Detects whether two 64-bit integers have opposite signs."

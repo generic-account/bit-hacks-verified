@@ -1,6 +1,6 @@
 ---
 layout: "hack"
-title: "Compute the sign of a 64-bit integer (-1/+1)"
+title: "Sign (-1/+1)"
 summary: "Computes the sign of a 64-bit integer, returning -1 for negative inputs and +1 otherwise."
 hack_id: "sign_pm1_int64"
 tags: ["integer", "sign", "bit-shift", "branchless"]

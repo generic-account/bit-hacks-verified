@@ -1,5 +1,5 @@
 /*
-title = "Compute the sign mask of a 64-bit integer (-1/0)"
+title = "Sign mask (-1/0)"
 hack_id = "sign_mask_int64"
 tags = ["integer", "sign", "bit-shift", "branchless"]
 summary = "Computes a sign mask for a 64-bit integer, returning -1 for negative inputs and 0 otherwise."

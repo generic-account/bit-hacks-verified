@@ -1,5 +1,5 @@
 /*
-title = "Compute the maximum of two 64-bit integers"
+title = "Maximum of two integers"
 hack_id = "max_int64_pair"
 tags = ["integer", "maximum", "comparison", "branchless"]
 summary = "Computes the maximum of two 64-bit integers without branching."

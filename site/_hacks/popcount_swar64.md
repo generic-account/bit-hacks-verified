@@ -1,6 +1,6 @@
 ---
 layout: "hack"
-title: "64-bit SWAR popcount"
+title: "SWAR popcount"
 summary: "Counts the set bits in a 64-bit word using a classic SWAR reduction."
 hack_id: "popcount_swar64"
 tags: ["bitcount", "integer", "popcount", "swar"]

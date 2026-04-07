@@ -1,5 +1,5 @@
 /*
-title = "64-bit SWAR popcount"
+title = "SWAR popcount"
 hack_id = "popcount_swar64"
 tags = ["bitcount", "integer", "popcount", "swar"]
 summary = "Counts the set bits in a 64-bit word using a classic SWAR reduction."

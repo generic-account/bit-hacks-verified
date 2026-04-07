@@ -1,6 +1,6 @@
 ---
 layout: "hack"
-title: "Compute the absolute value of a 64-bit integer as uint64_t"
+title: "Absolute value as uint64_t"
 summary: "Computes the absolute value of a 64-bit signed integer without branching, producing a uint64_t result."
 hack_id: "abs_uint64_from_int64"
 tags: ["integer", "absolute-value", "bit-shift", "branchless"]
