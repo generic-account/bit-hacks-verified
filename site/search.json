@@ -69,6 +69,23 @@
     ]
   },
   {
+    "title": "Detect whether two 64-bit integers have opposite signs",
+    "hack_id": "opposite_signs_int64_pair",
+    "tags": [
+      "integer",
+      "sign",
+      "xor",
+      "branchless"
+    ],
+    "summary": "Detects whether two 64-bit integers have opposite signs.",
+    "contract": "Returns true when exactly one input is negative, and false otherwise.",
+    "path": "src/hacks/opposite_signs_int64_pair.c",
+    "url": "/hacks/opposite_signs_int64_pair/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#DetectOppositeSigns"
+    ]
+  },
+  {
     "title": "Test whether a 64-bit integer is non-negative (0/1)",
     "hack_id": "is_nonnegative_int64",
     "tags": [
