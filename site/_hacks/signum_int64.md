@@ -15,11 +15,6 @@ permalink: "/hacks/signum_int64/"
 
 Computes the signum of a 64-bit integer, returning -1 for negatives, 0 for zero, and +1 for positives.
 
-## Types
-
-- Input: `int64_t`
-- Output: `int64_t`
-
 ## Contract
 
 Returns -1 when the input is negative, 0 when the input is zero, and +1 when the input is positive.

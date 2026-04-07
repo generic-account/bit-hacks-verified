@@ -15,11 +15,6 @@ permalink: "/hacks/popcount_swar64/"
 
 Counts the set bits in a 64-bit word using a classic SWAR reduction.
 
-## Types
-
-- Input: `uint64_t`
-- Output: `uint32_t`
-
 ## Contract
 
 Returns the number of one bits in the input as an integer in the inclusive range [0, 64].

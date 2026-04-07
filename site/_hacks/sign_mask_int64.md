@@ -15,11 +15,6 @@ permalink: "/hacks/sign_mask_int64/"
 
 Computes a sign mask for a 64-bit integer, returning -1 for negative inputs and 0 otherwise.
 
-## Types
-
-- Input: `int64_t`
-- Output: `int64_t`
-
 ## Contract
 
 Returns -1 when the input is negative and 0 when the input is zero or positive.

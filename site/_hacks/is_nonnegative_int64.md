@@ -15,11 +15,6 @@ permalink: "/hacks/is_nonnegative_int64/"
 
 Tests whether a 64-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives.
 
-## Types
-
-- Input: `int64_t`
-- Output: `int64_t`
-
 ## Contract
 
 Returns 0 when the input is negative and 1 when the input is zero or positive.

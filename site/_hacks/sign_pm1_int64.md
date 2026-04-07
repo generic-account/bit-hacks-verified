@@ -15,11 +15,6 @@ permalink: "/hacks/sign_pm1_int64/"
 
 Computes the sign of a 64-bit integer, returning -1 for negative inputs and +1 otherwise.
 
-## Types
-
-- Input: `int64_t`
-- Output: `int64_t`
-
 ## Contract
 
 Returns -1 when the input is negative and +1 when the input is zero or positive.

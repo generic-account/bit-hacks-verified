@@ -95,14 +95,6 @@ def extract_typedef_decl(text: str, name: str) -> str:
             raise ValueError(f"unterminated typedef for {name}")
 
 
-def typedef_display_name(typedef_decl: str, name: str) -> str:
-    normalized = " ".join(typedef_decl.split())
-    match = re.match(rf"typedef\s+(.+?)\s+{re.escape(name)}\s*;$", normalized)
-    if match is None:
-        return name
-    return match.group(1).strip()
-
-
 def md_list(items: list[str]) -> str:
     if not items:
         return "- None\n"
@@ -132,7 +124,6 @@ def slugify(text: str) -> str:
 
 def render_markdown(metadata: dict, relpath: str,
     input_typedef: str, output_typedef: str,
-    input_label: str, output_label: str,
     optimized_impls: list[tuple[str, str]], reference_src: str) -> str:
     hack_url = f"/hacks/{metadata['hack_id']}/"
     front_matter = {
@@ -160,11 +151,6 @@ def render_markdown(metadata: dict, relpath: str,
             "## Summary",
             "",
             metadata["summary"],
-            "",
-            "## Types",
-            "",
-            f"- Input: `{input_label}`",
-            f"- Output: `{output_label}`",
             "",
             "## Contract",
             "",
@@ -313,8 +299,6 @@ def main() -> None:
         ]
         input_typedef = extract_typedef_decl(text, "bh_input_t")
         output_typedef = extract_typedef_decl(text, "bh_output_t")
-        input_label = typedef_display_name(input_typedef, "bh_input_t")
-        output_label = typedef_display_name(output_typedef, "bh_output_t")
         reference_src = extract_function(text, "bh_reference")
         relpath = str(hack_path.relative_to(ROOT))
         hack_url = f"/hacks/{metadata['hack_id']}/"
@@ -322,7 +306,6 @@ def main() -> None:
         markdown = render_markdown(
             metadata, relpath,
             input_typedef, output_typedef,
-            input_label, output_label,
             optimized_impls, reference_src
         )
         md_out = HACKS_OUT_DIR / f"{metadata['hack_id']}.md"
