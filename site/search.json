@@ -154,6 +154,23 @@
     ]
   },
   {
+    "title": "Sign-extend a 5-bit integer",
+    "hack_id": "sign_extend_5bit_int64",
+    "tags": [
+      "integer",
+      "sign-extension",
+      "bitfield",
+      "constant-width"
+    ],
+    "summary": "Sign-extends the low 5 bits of an integer into a full signed result.",
+    "contract": "Interprets the low 5 bits of the input as a signed two's-complement integer and returns the corresponding value in the range [-16, 15].",
+    "path": "src/hacks/sign_extend_5bit_int64.c",
+    "url": "/hacks/sign_extend_5bit_int64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#FixedSignExtend"
+    ]
+  },
+  {
     "title": "Signum (-1/0/+1)",
     "hack_id": "signum_int64",
     "tags": [
