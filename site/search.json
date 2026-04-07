@@ -17,6 +17,23 @@
     ]
   },
   {
+    "title": "Is a power of two (0/1)",
+    "hack_id": "is_power_of_two_uint64",
+    "tags": [
+      "integer",
+      "power-of-two",
+      "bit-test",
+      "branchless"
+    ],
+    "summary": "Tests whether a uint64_t value is a power of two.",
+    "contract": "Returns true exactly when the input is one of 1, 2, 4, ..., 2^63.",
+    "path": "src/hacks/is_power_of_two_uint64.c",
+    "url": "/hacks/is_power_of_two_uint64/",
+    "sources": [
+      "https://graphics.stanford.edu/~seander/bithacks.html#DetermineIfPowerOf2"
+    ]
+  },
+  {
     "title": "Is non-negative (0/1)",
     "hack_id": "is_nonnegative_int64",
     "tags": [
