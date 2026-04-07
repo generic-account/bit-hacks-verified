@@ -21,9 +21,11 @@ layout: default
     {% endif %}
     {% if page.tags and page.tags.size > 0 %}
       <br><strong>Tags:</strong>
+      <span class="tag-brackets">[
       {% for t in page.tags %}
-        <a class="tag-link" href="{{ '/tags/' | relative_url }}{{ t | slugify }}/">{{ t }}</a>
+        <a href="{{ '/tags/' | relative_url }}{{ t | slugify }}/">{{ t }}</a>{% if forloop.last == false %}, {% endif %}
       {% endfor %}
+      ]</span>
     {% endif %}
   </p>
   <hr/>

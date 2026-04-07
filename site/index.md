@@ -9,7 +9,10 @@ title: Bit Hacks
 
 Standalone C implementations with differential verification, sanitizers, and fuzz smoke coverage.
 
-<p class="site-nav-inline"><a href="{{ "/search.html" | relative_url }}">Search</a></p>
+<div class="search-callout">
+<strong>Search the catalog.</strong> Filter hacks by title or tag.
+<br><a href="{{ "/search.html" | relative_url }}">Open search</a>
+</div>
 
 ## Verification
 
@@ -21,7 +24,7 @@ Standalone C implementations with differential verification, sanitizers, and fuz
 ## Hacks
 
 <ul class="hack-list">
-<li><a href="{{ "/hacks/popcount_swar64/" | relative_url }}">64-bit SWAR popcount</a> — Counts the set bits in a 64-bit word using a classic SWAR reduction. <span class="tag-row"><a class="tag-link" href="{{ "/tags/bitcount/" | relative_url }}">bitcount</a> <a class="tag-link" href="{{ "/tags/integer/" | relative_url }}">integer</a> <a class="tag-link" href="{{ "/tags/popcount/" | relative_url }}">popcount</a> <a class="tag-link" href="{{ "/tags/swar/" | relative_url }}">swar</a></span></li>
+<li><a href="{{ "/hacks/popcount_swar64/" | relative_url }}">64-bit SWAR popcount</a> — Counts the set bits in a 64-bit word using a classic SWAR reduction. <span class="tag-brackets">[<a href="{{ "/tags/bitcount/" | relative_url }}">bitcount</a>, <a href="{{ "/tags/integer/" | relative_url }}">integer</a>, <a href="{{ "/tags/popcount/" | relative_url }}">popcount</a>, <a href="{{ "/tags/swar/" | relative_url }}">swar</a>]</span></li>
 </ul>
 
 ## Sources

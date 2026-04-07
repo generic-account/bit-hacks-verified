@@ -191,7 +191,10 @@ def render_index(records: list[dict]) -> str:
         "",
         "Standalone C implementations with differential verification, sanitizers, and fuzz smoke coverage.",
         "",
-        '<p class="site-nav-inline"><a href="{{ "/search.html" | relative_url }}">Search</a></p>',
+        '<div class="search-callout">',
+        '<strong>Search the catalog.</strong> Filter hacks by title or tag.',
+        '<br><a href="{{ "/search.html" | relative_url }}">Open search</a>',
+        "</div>",
         "",
         "## Verification",
         "",
@@ -207,8 +210,8 @@ def render_index(records: list[dict]) -> str:
     for record in records:
         summary = record["summary"]
         hack_path = record["url"]
-        tag_links = " ".join(
-            '<a class="tag-link" href="{{{{ "/tags/{}/" | relative_url }}}}">{}</a>'.format(
+        tag_links = ", ".join(
+            '<a href="{{{{ "/tags/{}/" | relative_url }}}}">{}</a>'.format(
                 slugify(tag), tag
             )
             for tag in record["tags"]
@@ -216,7 +219,7 @@ def render_index(records: list[dict]) -> str:
         lines.append(
             '<li><a href="{{ "' + hack_path + '" | relative_url }}">' + record["title"] + '</a>'
             + (" — " + summary if summary else "")
-            + (' <span class="tag-row">' + tag_links + '</span>' if tag_links else "")
+            + (' <span class="tag-brackets">[' + tag_links + ']</span>' if tag_links else "")
             + '</li>'
         )
     lines.extend(["</ul>", "", "## Sources", ""])
