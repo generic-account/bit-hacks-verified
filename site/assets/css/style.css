@@ -84,6 +84,27 @@ pre code {
   padding: 0;
   border-radius: 0;
 }
+.highlighter-rouge,
+.highlight {
+  margin: 0;
+}
+.highlighter-rouge .highlight {
+  background: transparent;
+}
+.highlighter-rouge pre,
+.highlight pre,
+pre.highlight {
+  margin: 0;
+  padding: 0.9rem;
+}
+.highlighter-rouge code,
+.highlight code,
+pre code {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 
 /* Blockquotes & tables */
 blockquote { color: #d0d0d0; border-left: 3px solid #333; }
