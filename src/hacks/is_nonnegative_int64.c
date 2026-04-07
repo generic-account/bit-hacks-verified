@@ -1,8 +1,8 @@
 /*
-title = "Test whether a 32-bit integer is non-negative (0/1)"
-hack_id = "is_nonnegative_int32"
+title = "Test whether a 64-bit integer is non-negative (0/1)"
+hack_id = "is_nonnegative_int64"
 tags = ["integer", "sign", "bit-shift", "branchless"]
-summary = "Tests whether a 32-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives."
+summary = "Tests whether a 64-bit integer is non-negative, returning 1 for zero or positives and 0 for negatives."
 contract = "Returns 0 when the input is negative and 1 when the input is zero or positive."
 notes = """
 This is a non-negativity test, not a signum function.
@@ -16,8 +16,8 @@ sources = [
 #include <assert.h>
 #include <stdint.h>
 
-typedef int32_t bh_input_t;
-typedef int32_t bh_output_t;
+typedef int64_t bh_input_t;
+typedef int64_t bh_output_t;
 
 static bh_output_t bh_optimized_unsigned_shift(bh_input_t input);
 
@@ -39,21 +39,21 @@ static bh_output_t bh_reference(bh_input_t input)
 
 static bh_output_t bh_optimized_unsigned_shift(bh_input_t input)
 {
-    return 1 ^ (bh_output_t)((uint32_t)input >> 31);
+    return 1 ^ (bh_output_t)((uint64_t)input >> 63);
 }
 
 static void bh_tests(void)
 {
-    BH_ASSERT_OPT_EQ(INT32_C(-2147483648), 0);
-    BH_ASSERT_OPT_EQ(INT32_C(-1), 0);
-    BH_ASSERT_OPT_EQ(INT32_C(0), 1);
-    BH_ASSERT_OPT_EQ(INT32_C(1), 1);
-    BH_ASSERT_OPT_EQ(INT32_C(2147483647), 1);
+    BH_ASSERT_OPT_EQ(INT64_MIN, 0);
+    BH_ASSERT_OPT_EQ(INT64_C(-1), 0);
+    BH_ASSERT_OPT_EQ(INT64_C(0), 1);
+    BH_ASSERT_OPT_EQ(INT64_C(1), 1);
+    BH_ASSERT_OPT_EQ(INT64_MAX, 1);
 
-    BH_ASSERT_AGREE(INT32_C(-2));
-    BH_ASSERT_AGREE(INT32_C(2));
-    BH_ASSERT_AGREE(INT32_C(-1073741824));
-    BH_ASSERT_AGREE(INT32_C(1073741824));
+    BH_ASSERT_AGREE(INT64_C(-2));
+    BH_ASSERT_AGREE(INT64_C(2));
+    BH_ASSERT_AGREE(INT64_C(-4611686018427387904));
+    BH_ASSERT_AGREE(INT64_C(4611686018427387904));
 }
 
 BH_DEFINE_TRIVIAL_INPUT_DECODER()
