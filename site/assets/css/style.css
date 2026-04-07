@@ -30,6 +30,32 @@ a:hover, a:focus {
   color: #000;
 }
 
+.site-nav-inline {
+  margin: 0 0 1.25rem;
+}
+
+.site-nav-inline a {
+  margin-right: 0.9rem;
+}
+
+.tag-link {
+  display: inline-block;
+  margin: 0.15rem 0.3rem 0.15rem 0;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid #666;
+  border-radius: 999px;
+  line-height: 1.4;
+  font-size: 0.9em;
+  background: #111;
+}
+
+a.tag-link:hover,
+a.tag-link:focus {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
 /* Dividers & typography polish */
 hr { border: 0; border-top: 1px solid #333; margin: 2rem 0; }
 h1, h2, h3 { color: #fff; }

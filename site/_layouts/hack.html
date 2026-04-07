@@ -3,6 +3,10 @@ layout: default
 ---
 
 <article class="hack">
+  <p class="site-nav-inline">
+    <a href="{{ '/' | relative_url }}">Home</a>
+    <a href="{{ '/search.html' | relative_url }}">Search</a>
+  </p>
   <h1>{{ page.title }}</h1>
   {% if page.summary %}
     <p>{{ page.summary }}</p>
@@ -18,7 +22,7 @@ layout: default
     {% if page.tags and page.tags.size > 0 %}
       <br><strong>Tags:</strong>
       {% for t in page.tags %}
-        <a href="{{ '/tags/' | relative_url }}{{ t | slugify }}/">{{ t }}</a>{% if forloop.last == false %}, {% endif %}
+        <a class="tag-link" href="{{ '/tags/' | relative_url }}{{ t | slugify }}/">{{ t }}</a>
       {% endfor %}
     {% endif %}
   </p>

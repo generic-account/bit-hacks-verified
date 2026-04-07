@@ -2,6 +2,10 @@
 layout: default
 ---
 
+<p class="site-nav-inline">
+  <a href="{{ '/' | relative_url }}">Home</a>
+  <a href="{{ '/search.html' | relative_url }}">Search</a>
+</p>
 <h1>Tag: {{ page.tag }}</h1>
 <p>All hacks tagged <strong>{{ page.tag }}</strong>.</p>
 <ul>

@@ -9,6 +9,8 @@ title: Bit Hacks
 
 Standalone C implementations with differential verification, sanitizers, and fuzz smoke coverage.
 
+<p class="site-nav-inline"><a href="{{ "/search.html" | relative_url }}">Search</a></p>
+
 ## Verification
 
 - Strict Clang warnings in test and fuzz builds
@@ -18,7 +20,9 @@ Standalone C implementations with differential verification, sanitizers, and fuz
 
 ## Hacks
 
-- [64-bit SWAR popcount]({{ "/hacks/popcount_swar64/" | relative_url }}) — Counts the set bits in a 64-bit word using a classic SWAR reduction. [bitcount, integer, popcount, swar]
+<ul class="hack-list">
+<li><a href="{{ "/hacks/popcount_swar64/" | relative_url }}">64-bit SWAR popcount</a> — Counts the set bits in a 64-bit word using a classic SWAR reduction. <span class="tag-row"><a class="tag-link" href="{{ "/tags/bitcount/" | relative_url }}">bitcount</a> <a class="tag-link" href="{{ "/tags/integer/" | relative_url }}">integer</a> <a class="tag-link" href="{{ "/tags/popcount/" | relative_url }}">popcount</a> <a class="tag-link" href="{{ "/tags/swar/" | relative_url }}">swar</a></span></li>
+</ul>
 
 ## Sources
 
